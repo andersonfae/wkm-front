@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -36,16 +37,13 @@ const AddPessoa = () => {
         const data = await response.json();
 
         if (data && data.data) {
-          const estadosComNome = data.data.map((estado: any) => ({
-            id: estado.id,
-            nome: estado.Nome,
-          }));
-          setEstados(estadosComNome);
-        } else {
-          console.error(
-            "Os dados recebidos não têm a propriedade 'data':",
-            data
+          const estadosComNome = data.data.map(
+            (estado: { id: number; Nome: string }) => ({
+              id: estado.id,
+              nome: estado.Nome,
+            })
           );
+          setEstados(estadosComNome);
         }
       } catch (error) {
         console.error("Erro ao buscar estados:", error);
@@ -160,10 +158,12 @@ const AddPessoa = () => {
       <div className="bg-indigo-50 min-h-screen flex items-center justify-center">
         <ToastContainer />
         <div className="isolate rounded-[20px] bg-white px-6 py-8 sm:py-12 lg:px-8 w-11/12 lg:w-fit">
-          <img
+          <Image
             src="/wkm_img.png"
             alt="Imagem de cabeçalho"
-            className="w-62 h-62 object-cover mb-10"
+            width={250} // ajuste conforme necessário
+            height={250} // ajuste conforme necessário
+            className="object-cover mb-10"
           />
           <div className="mx-auto sr-only max-w-2xl text-center">
             <h2 className="text-balance text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
